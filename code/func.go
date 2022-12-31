@@ -41,3 +41,29 @@ func Call(name string, params []Code) Code {
 	buf.WriteString(")")
 	return Code(buf.String())
 }
+
+func Len(a Code) Code {
+	return Code("len(" + string(a) + ")")
+}
+
+func Cap(a Code) Code {
+	return Code("cap(" + string(a) + ")")
+}
+
+func New(a Code) Code {
+	return Code("new(" + string(a) + ")")
+}
+
+func Make(a Code, params ...Code) Code {
+	buf := bytes.NewBuffer(nil)
+	buf.WriteString("make(" + string(a))
+	for _, param := range params {
+		buf.WriteString(", " + string(param))
+	}
+	buf.WriteString(")")
+	return Code(buf.String())
+}
+
+func Delete(a Code, b Code) Code {
+	return Code("delete(" + string(a) + ", " + string(b) + ")")
+}
