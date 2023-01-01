@@ -42,9 +42,13 @@ func Loop(body ...Code) Code {
 	return Code(buf.String())
 }
 
-func If(condition Code, body ...Code) Code {
+func If(init Code, condition Code, body ...Code) Code {
 	buf := bytes.NewBuffer(nil)
-	buf.WriteString("if " + string(condition) + " {\n")
+	buf.WriteString("if ")
+	if init != "" {
+		buf.WriteString(string(init) + "; ")
+	}
+	buf.WriteString(string(condition) + " {\n")
 	for _, line := range body {
 		buf.WriteString("\t" + string(line) + "\n")
 	}
